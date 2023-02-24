@@ -17,12 +17,10 @@ jobs:
 
   release:
     needs: archive
-    runs-on: ubuntu-latest
-      - id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT }}
+      - name: Create Release
+        uses: "marvinpinto/action-automatic-releases@latest"
         with:
+          repo_token: ${{ secrets.PAT }}
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
           body: |
