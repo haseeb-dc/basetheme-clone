@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v3
 
   release:
-    needs: archive
+    needs: init
     runs-on: ubuntu-latest
     steps:
       - name: Create Release
@@ -29,3 +29,6 @@ jobs:
             Release ${{ github.ref }}
           draft: false
           prerelease: false
+          files: |
+          .gitignore
+          sw.js
