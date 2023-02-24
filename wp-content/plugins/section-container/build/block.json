@@ -1,0 +1,45 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "create-block/section-container",
+  "version": "1.0.0",
+  "title": "Section Container",
+  "category": "theme-blocks",
+  "icon": "align-center",
+  "description": "Glide Block to Manager Avaliable Sections",
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "attributes": {
+    "tagName": {
+      "type": "string",
+      "default": "section"
+    },
+    "bgDesignType": {
+      "type": "string",
+      "default": ""
+    },
+    "bgWidth": {
+      "type": "string",
+      "default": "ctn"
+    },
+    "bgImage": {
+      "type": "object",
+      "default": {
+        "title": "",
+        "filename": "",
+        "url": "",
+        "isOverlay": false,
+        "overlay": ""
+      }
+    }
+  },
+  "textdomain": "section-container",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css"
+}
