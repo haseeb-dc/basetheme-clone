@@ -17,6 +17,7 @@ jobs:
 
   release:
     needs: archive
+    runs-on: ubuntu-latest
     steps:
       - name: Create Release
         uses: "marvinpinto/action-automatic-releases@latest"
