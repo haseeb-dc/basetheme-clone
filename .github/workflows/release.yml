@@ -28,5 +28,5 @@ jobs:
           draft: false
           prerelease: false
           files: |
-           .gitignore
+            .gitignore
             sw.js
