@@ -23,10 +23,8 @@ jobs:
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: ${{ secrets.PAT }}
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          body: |
-            Release ${{ github.ref }}
+          automatic_release_tag: ${{ github.ref }}
+          title: Release ${{ github.ref }}
           draft: false
           prerelease: false
           files: |
