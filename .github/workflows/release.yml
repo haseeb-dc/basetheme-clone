@@ -13,17 +13,17 @@ jobs:
       contents: write
       
     steps:
-    - name: Zip section-container
+      - name: Zip section-container
         run: |
           cd wp-content/plugins
           zip -r section-container.zip section-container
-    - name: Zip section-container
+      - name: Zip section-container
         run: |
           cd wp-content/themes
           zip -r glide-basetheme.zip glide-basetheme
-    - name: Create Release
-      - uses: actions/checkout@v3
-      - uses: ncipollo/release-action@v1
-        with:
-          artifacts: ".gitignore,sw.js,wp-content/themes/glide-basetheme.zip,wp-content/plugins/section-container.zip"
-          bodyFile: "README.md"
+      - name: Create Release
+        - uses: actions/checkout@v3
+        - uses: ncipollo/release-action@v1
+          with:
+            artifacts: ".gitignore,sw.js,wp-content/themes/glide-basetheme.zip,wp-content/plugins/section-container.zip"
+            bodyFile: "README.md"
