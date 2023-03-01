@@ -1,32 +1,19 @@
-name: Create Release with Zip Archive
+name: Releases
 
-on:
+on: 
   push:
     tags:
-      - 'v*'
-  workflow_dispatch:
+    - 'v*'
 
 jobs:
 
-  init:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
   release:
-    needs: init
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - name: Create Release
-        uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          repo_token: ${{ secrets.PAT }}
-          automatic_release_tag: ${{ github.ref }}
-          title: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
-          files: |
-            .gitignore
-            sw.js
+    - uses: actions/checkout@v2
+    - uses: ncipollo/release-action@v1
+      with:
+        artifacts: ".gitignore,sw.js"
+        bodyFile: "README.md"
