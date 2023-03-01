@@ -17,10 +17,6 @@ jobs:
         run: |
           cd wp-content/plugins
           zip -r section-container.zip section-container
-      - name: Zip section-container
-        run: |
-          cd wp-content/themes
-          zip -r glide-basetheme.zip glide-basetheme
       - name: Create Release
         - uses: actions/checkout@v3
         - uses: ncipollo/release-action@v1
