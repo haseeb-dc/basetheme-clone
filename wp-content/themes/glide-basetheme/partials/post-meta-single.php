@@ -9,7 +9,7 @@
  *
  */
 
-$pID = get_the_ID();
+$post_id = get_the_ID();
 $author_id = $post->post_author;
 
 // Post ACf fields
@@ -30,8 +30,8 @@ if(!$basethemevar_author_avatar){
 }
 
 // Post Tags & Categories
-$basethemevar_post_tags = get_the_tags($pID);
-$basethemevar_post_categories = get_categories($pID);
+$basethemevar_post_tags = get_the_tags($post_id);
+$basethemevar_post_categories = get_categories($post_id);
 
 ?>
 

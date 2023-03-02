@@ -8,37 +8,37 @@
  * @since 1.0.0
  */
 
-
 // Global variables
 global $option_fields;
-global $pID;
+global $post_id;
 global $fields;
 
-
-$pID = get_the_ID();
+// @codingStandardsIgnoreStart
+$post_id = get_the_ID();
 
 if ( is_home() ) {
-	$pID = get_option( 'page_for_posts' );
+	$post_id = get_option( 'page_for_posts' );
 }
 
 if ( is_404() || is_archive() || is_category() || is_search() ) {
-	$pID = get_option( 'page_on_front' );
+	$post_id = get_option( 'page_on_front' );
 }
 
 if ( function_exists( 'get_fields' ) && function_exists( 'get_fields_escaped' ) ) {
 	$option_fields = get_fields_escaped( 'option' );
-	$fields        = get_fields_escaped( $pID );
+	$fields        = get_fields_escaped( $post_id );
 }
+// @codingStandardsIgnoreEnd
 // Page Tags - Advanced custom fields variables
-$tracking = ( isset( $option_fields['tracking_code'] ) ) ? $option_fields['tracking_code'] : null;
-$ccss     = ( isset( $option_fields['custom_css'] ) ) ? $option_fields['custom_css'] : null;
-$hscripts = ( isset( $option_fields['head_scripts'] ) ) ? $option_fields['head_scripts'] : null;
-$bscripts = ( isset( $option_fields['body_scripts'] ) ) ? $option_fields['body_scripts'] : null;
+$basethemevar_tracking = ( isset( $option_fields['tracking_code'] ) ) ? $option_fields['tracking_code'] : null;
+$basethemevar_ccss     = ( isset( $option_fields['custom_css'] ) ) ? $option_fields['custom_css'] : null;
+$basethemevar_hscripts = ( isset( $option_fields['head_scripts'] ) ) ? $option_fields['head_scripts'] : null;
+$basethemevar_bscripts = ( isset( $option_fields['body_scripts'] ) ) ? $option_fields['body_scripts'] : null;
 
-$basethemevar_tohdr_btn     = $option_fields['basethemevar_tohdr_btn'];
-$basethemevar_tohdr_btn_two = $option_fields['basethemevar_tohdr_btn_two'];
-$basethemevar_tohdr_tbar    = $option_fields['basethemevar_tohdr_tbar'];
-// Page variables - Advanced custom fields variables
+$basethemevar_tohdr_btn = ( isset( $option_fields['basethemevar_tohdr_btn'] ) ) ? $option_fields['basethemevar_tohdr_btn'] : null;
+$basethemevar_tohdr_btn_two = ( isset( $option_fields['basethemevar_tohdr_btn_two'] ) ) ? $option_fields['basethemevar_tohdr_btn_two'] : null;
+$basethemevar_tohdr_tbar = ( isset( $option_fields['basethemevar_tohdr_tbar'] ) ) ? $option_fields['basethemevar_tohdr_tbar'] : null;
+// Page variables - Advanced custom fields variables.
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
@@ -49,9 +49,9 @@ $basethemevar_tohdr_tbar    = $option_fields['basethemevar_tohdr_tbar'];
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	<?php
-		// Add Head Scripts
-	if ( $hscripts != '' ) {
-		echo html_entity_decode( $hscripts, ENT_QUOTES );
+		// Add Head Scripts.
+	if ( '' !== $basethemevar_hscripts ) {
+		echo html_entity_decode( $basethemevar_hscripts, ENT_QUOTES );
 	}
 	?>
 	<link rel="apple-touch-icon" sizes="180x180"
@@ -76,15 +76,15 @@ $basethemevar_tohdr_tbar    = $option_fields['basethemevar_tohdr_tbar'];
 	<!-- iOS Safari -->
 	<meta name="apple-mobile-web-app-status-bar-style" content="#0047FE">
 	<?php
-		// Tracking Code
-	if ( $tracking != '' ) {
-		echo html_entity_decode( $tracking, ENT_QUOTES );
+		// Tracking Code.
+	if (  '' !== $basethemevar_tracking) {
+		echo html_entity_decode( $basethemevar_tracking, ENT_QUOTES );
 	}
 
-		// Custom CSS
-	if ( $ccss != '' ) {
+		// Custom CSS.
+	if ( '' !== $basethemevar_ccss ) {
 		echo '<style type="text/css">';
-		echo html_entity_decode( $ccss, ENT_QUOTES );
+		echo html_entity_decode( $basethemevar_ccss, ENT_QUOTES );
 		echo '</style>';
 	}
 	?>
@@ -104,13 +104,15 @@ $basethemevar_tohdr_tbar    = $option_fields['basethemevar_tohdr_tbar'];
 	</script>
 </head>
 
-<body <?php body_class(); ?>> <?php wp_body_open(); ?> <?php
-if ( $bscripts != '' ) {
-	?>
+<body <?php body_class(); ?>> <?php wp_body_open(); ?>
+<?php
+if (  '' !== $basethemevar_bscripts ) {
+?>
 	 <div style="display: none;">
-		<?php echo html_entity_decode( $bscripts, ENT_QUOTES ); ?> </div> <?php } ?> <a
-		class="skip-link screen-reader-text"
-		href="#page-section"><?php esc_html_e( 'Skip to content', 'basetheme_td' ); ?></a>
+		<?php echo html_entity_decode( $basethemevar_bscripts, ENT_QUOTES ); ?>
+	</div>
+	<?php } ?>
+		<a class="skip-link screen-reader-text" href="#page-section"><?php esc_html_e( 'Skip to content', 'basetheme_td' ); ?></a>
 	<header id="header-section" class="header-section">
 		<!-- Header Start -->
 		<div class="top-bar center-align" id="top-bar-ajax" style="display:none;">
@@ -119,14 +121,14 @@ if ( $bscripts != '' ) {
 					Lorem Ipsum is simply dummy text of the printing and typesetting industry.
 					<?php
 					if ( $basethemevar_tohdr_btn ) {
-						echo glide_acf_button( $basethemevar_tohdr_btn, '' );
+						echo build_acf_button( $basethemevar_tohdr_btn, '' );
 					}
 					?>
 				</div>
 			</div>
 			<div class="top-bar-cross">
 				<span>
-					<img src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/img/topbar-cross-icon.svg"
+					<img src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/src/img/topbar-cross-icon.svg"
 						width="16" height="16" alt="<?php esc_attr_e( 'Top bar', 'basetheme_td' ); ?>">
 				</span>
 			</div>
@@ -154,11 +156,11 @@ if ( $bscripts != '' ) {
 						<div class="header-btns desktop-hide">
 							<?php
 							if ( $basethemevar_tohdr_btn ) {
-								echo glide_acf_button( $basethemevar_tohdr_btn, 'button' );
+								echo build_acf_button( $basethemevar_tohdr_btn, 'button' );
 							}
 
 							if ( $basethemevar_tohdr_btn_two ) {
-								echo glide_acf_button( $basethemevar_tohdr_btn_two, 'button' );
+								echo build_acf_button( $basethemevar_tohdr_btn_two, 'button' );
 							}
 							?>
 						</div>
@@ -175,11 +177,11 @@ if ( $bscripts != '' ) {
 			<div class="header-btns">
 				<?php
 				if ( $basethemevar_tohdr_btn ) {
-					echo glide_acf_button( $basethemevar_tohdr_btn, 'button' );
+					echo build_acf_button( $basethemevar_tohdr_btn, 'button' );
 				}
 
 				if ( $basethemevar_tohdr_btn_two ) {
-					echo glide_acf_button( $basethemevar_tohdr_btn_two, 'button' );
+					echo build_acf_button( $basethemevar_tohdr_btn_two, 'button' );
 				}
 				?>
 			</div>

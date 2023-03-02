@@ -6,15 +6,10 @@
  *
  * @package BaseTheme Package
  * @since 1.0.0
- *
  */
 
 ?>
 
 <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-
-
-		<?php get_template_part( 'partials/content' ); ?>
-
-
+	<?php get_template_part( 'partials/content' ); ?>
 </div>

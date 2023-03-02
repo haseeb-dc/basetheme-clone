@@ -9,9 +9,8 @@
  */
 // Global variables
 global $option_fields;
-global $pID;
+global $post_id;
 global $fields;
-
 
 $basethemevar_page_cta_pagevisibility = ( isset( $fields['basethemevar_page_cta_pagevisibility'] ) ) ? $fields['basethemevar_page_cta_pagevisibility'] : null;
 

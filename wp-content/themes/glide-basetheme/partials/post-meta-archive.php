@@ -8,7 +8,7 @@
  * @since 1.0.0
  *
  */
-$pID = get_the_ID();
+$post_id = get_the_ID();
 $author_id = $post->post_author;
 
 // Post ACf fields
@@ -17,6 +17,8 @@ $author_id = $post->post_author;
 // Author profile image
 if (function_exists('get_field') ) {
 	$basethemevar_author_avatar = get_field('basethemevar_author_avatar', 'user_'.$author_id);
+}else{
+	$basethemevar_author_avatar=null;
 }
 
 if(!$basethemevar_author_avatar){
@@ -31,7 +33,7 @@ if(!$basethemevar_author_avatar){
 }
 
 // Post Tags & Categories
-$basethemevar_post_tag = get_the_tags($pID);
+$basethemevar_post_tag = get_the_tags($post_id);
 
  ?> <div class="post-box-meta d-flex justify-content-between">
 	<div class="post-date"><?php the_time( project_dtformat ); ?></div> <?php if($basethemevar_post_tag){ ?> <div

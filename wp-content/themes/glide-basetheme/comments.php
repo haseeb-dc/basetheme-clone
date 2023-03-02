@@ -21,12 +21,11 @@
  * return early without loading the comments. /2/
  */
 
-if ( ! empty( $_SERVER['SCRIPT_FILENAME'] ) && 'comments.php' == basename( $_SERVER['SCRIPT_FILENAME'] ) ) { /*1*/
-		die( __( 'Please do not load this page directly. Thanks!', 'basetheme_td' ) );
+if ( ! empty( $_SERVER['SCRIPT_FILENAME'] ) && 'comments.php' === basename( esc_url_raw( wp_unslash( $_SERVER['SCRIPT_FILENAME'] ) ) ) ) { /*1*/
+		die( esc_html__( 'Please do not load this page directly. Thanks!', 'basetheme_td' ) );
 }
-if ( post_password_required() ) { /*2*/ ?>
-	<?php _e( 'This post is password protected. Enter the password to view comments.', 'basetheme_td' ); ?>
-	<?php
+if ( post_password_required() ) {
+	esc_html__( 'This post is password protected. Enter the password to view comments.', 'basetheme_td' );
 	return;
 }
 
@@ -41,19 +40,19 @@ if ( post_password_required() ) { /*2*/ ?>
 			?>
 		<h3 class="section-title" id="comments">
 			<?php
-				$theme_comment_count = get_comments_number();
-			if ( '1' === $theme_comment_count ) {
+				$basethemevar_comment_count = get_comments_number();
+			if ( '1' === $basethemevar_comment_count ) {
 				printf(
 					/* translators: 1: title. */
-					__( 'One Responce', 'basetheme_td' ),
-					'<span>' . get_the_title() . '</span>'
+					esc_html__( 'One Response', 'basetheme_td' ),
+					'<span>' . html_entity_remove( get_the_title() ) . '</span>'
 				);
 			} else {
-				printf( // WPCS: XSS OK.
+				printf(
 					/* translators: 1: comment count number, 2: title. */
-					esc_html( _nx( '%1$s Responce', '%1$s Responces', $theme_comment_count, 'comments title', 'basetheme_td' ) ),
-					number_format_i18n( $theme_comment_count ),
-					'<span>' . get_the_title() . '</span>'
+					esc_html( _nx( '%1$s Response', '%1$s Response', $theme_comment_count, 'comments title', 'basetheme_td' ) ),
+					esc_html( number_format_i18n( $theme_comment_count ) ),
+					'<span>' . html_entity_remove( get_the_title() ) . '</span>'
 				);
 			}
 			?>
@@ -61,7 +60,7 @@ if ( post_password_required() ) { /*2*/ ?>
 		<div class="navigation">
 			<?php the_comments_navigation(); ?>
 		</div>
-		<ol class="commentlist">
+		<ol class="comment-list">
 
 			<?php
 				wp_list_comments(
@@ -77,13 +76,13 @@ if ( post_password_required() ) { /*2*/ ?>
 		<div class="navigation">
 			<?php the_comments_navigation(); ?>
 		</div>
-		<?php } else { // this is displayed if there are no comments so far ?>
+		<?php } else { // this is displayed if there are no comments so far. ?>
 
 			<?php
 			// If comments are closed and there are comments, let's leave a little note, shall we?
 			if ( ! comments_open() ) {
 				?>
-		<p class="no-comments"><?php _e( 'Comments are closed.', 'basetheme_td' ); ?></p>
+		<p class="no-comments"><?php esc_html__( 'Comments are closed.', 'basetheme_td' ); ?></p>
 				<?php
 			}
 		}// Check for have_comments().

@@ -10,16 +10,20 @@
 
 
 $post_data=get_queried_object();
-$pID  = get_the_ID();
+$post_id  = get_the_ID();
 if (function_exists('get_fields') && function_exists('get_fields_escaped')) {
-	$post_fields = get_fields_escaped( $pID );
+	$post_fields = get_fields_escaped( $post_id );
 }
 
 // Post Tags & Categories
-// $basethemevar_post_tags = get_the_tags($pID);
-$basethemevar_post_categories = get_categories($pID);
+// $basethemevar_post_tags = get_the_tags($post_id);
+$basethemevar_post_categories = get_categories($post_id);
 
-$basethemevar_posttitle=glide_page_title('basethemevar_posttitle');
+
+$basethemevar_pagetitle = (isset($fields['basethemevar_posttitle'])) ? $fields['basethemevar_pagetitle'] : null;
+if(!$basethemevar_pagetitle){
+	$basethemevar_pagetitle = get_the_title();
+}
 
 ?>
 
@@ -117,10 +121,10 @@ $basethemevar_posttitle=glide_page_title('basethemevar_posttitle');
 								foreach ( $basethemevar_selected_posts as $basethemevar_post ) {
 									$post = $basethemevar_post;
 									setup_postdata( $post );
-									$pID         = $post->ID;
-									$post_fields = get_fields( $pID );
+									$post_id         = $post->ID;
+									$post_fields = get_fields( $post_id );
 									$custom_field  = $post_fields['custom_field'];
-									$src         = wp_get_attachment_image_src( get_post_thumbnail_id( $pID ), 'thumb_600', false );
+									$src         = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), 'thumb_600', false );
 									if ( ! $src ) {
 										$src = get_template_directory_uri() . '/assets/img/admin/defaults/default-image.webp';
 									} else {

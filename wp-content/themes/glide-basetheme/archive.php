@@ -8,22 +8,20 @@
  * @since 1.0.0
  */
 
-// Include header
+// Include header.
 get_header();
 
-// Global variables
+// Global variables.
 global $option_fields;
-global $pID;
+global $post_id;
 global $fields;
 
-
-
-
-?> <section id="hero-section" class="hero-section">
+?>
+<section id="hero-section" class="hero-section">
 	<!-- Hero Start -->
-	<div class="hero-ctn">
+	<div class="hero-single">
 		<div class="wrapper">
-			<h1><?php the_archive_title( ); ?></h1>
+			<h1><?php the_archive_title(); ?></h1>
 		</div>
 	</div>
 	<!-- Hero End -->
@@ -31,26 +29,38 @@ global $fields;
 <section id="page-section" class="page-section">
 	<!-- Content Start -->
 	<div class="wrapper">
-		<div class="three-columns">
+		<div class="<?php have_post_class( 'three-columns' ); ?>">
 			<?php
-				if ( have_posts() ) {
-					while ( have_posts() ) {
-						the_post();
-						// Include specific template for the content
-						get_template_part( 'partials/content-archive',get_post_type() );
-					}
-					?> <div class="clear"></div> <?php
-				} else {
-					// If no content, include the "No posts found" template.
-					get_template_part( 'partials/content', 'none' );
+			global $wp_query;
+			if ( have_posts() ) {
+				while ( have_posts() ) {
+					the_post();
+					// Include specific template for the content.
+					get_template_part( 'partials/content-archive', get_post_type() );
 				}
+				?>
+				<div class="clear"></div>
+				<?php
+			} else {
+				// If no content, include the "No posts found" template.
+				get_template_part( 'partials/content', 'none' );
+			}
 			?>
 		</div>
-		<div class="ts-40"></div> <?php
-		if ( function_exists( 'glide_pagination' ) ) { ?>
-			<div class="center-align"> <?php glide_pagination( $query->max_num_pages ); ?></div>
-		<?php } ?>
+		<div class="ts-40"></div>
+		<?php
+		if ( have_posts() ) {
+			if ( function_exists( 'build_pagination' ) ) {
+				?>
+			<div class="center-align">
+				<?php build_pagination( $wp_query->max_num_pages ); ?>
+			</div>
+				<?php
+			}
+		}
+		?>
 		<div class="ts-80"></div>
 	</div>
 	<!-- Content End -->
-</section> <?php get_footer(); ?>
+</section>
+<?php get_footer(); ?>

@@ -7,10 +7,11 @@
  * @package BaseTheme Package
  * @since 1.0.0
  */
+
 $block_fields = get_fields_escaped( $block['id'] );
 
-$image                             = get_the_post_thumbnail_url();
-$title                             = get_the_title();
+$basethemevar_image                = get_the_post_thumbnail_url();
+$basethemevar_title                = get_the_title();
 $basethemevar_cpt_team_designation = $block_fields['basethemevar_cpt_team_designation'];
 $basethemevar_cpt_team_text        = html_entity_decode( $block_fields['basethemevar_cpt_team_text'] );
 ?>
@@ -22,36 +23,36 @@ $basethemevar_cpt_team_text        = html_entity_decode( $block_fields['basethem
 		<div class="team-detail-inner">
 			<div class="single-team">
 				<div class="single-team-head d-flex flex-wrap justify-content-between align-items-center">
-					<?php if ( $image ) { ?>
-						<div class="member-image-popup reset-bg" style="background-image:url(<?php echo $image; ?>);">
+					<?php if ( $basethemevar_image ) { ?>
+						<div class="member-image-popup reset-bg" style="background-image:url(<?php echo esc_url( $basethemevar_image ); ?>);">
 						</div>
 					<?php } ?>
 					<div class="member-detail-popup">
-						<?php if ( $title ) { ?>
-							<h3 class="member-name-popup medium-text"> <?php echo $title; ?> </h3>
+						<?php if ( $basethemevar_title ) { ?>
+							<h3 class="member-name-popup medium-text"> <?php echo html_entity_decode( $basethemevar_title ); ?> </h3>
 						<?php } ?>
 						<?php if ( $basethemevar_cpt_team_designation ) { ?>
-							<h5 class="member-designation"><?php echo $basethemevar_cpt_team_designation; ?></h5>
+							<h5 class="member-designation"><?php echo html_entity_decode( $basethemevar_cpt_team_designation ); ?></h5>
 						<?php } ?>
 					</div>
 				</div>
 				<?php if ( $basethemevar_cpt_team_text ) { ?>
-					<div class="single-team-content"><?php echo $basethemevar_cpt_team_text; ?></div>
+					<div class="single-team-content"><?php echo html_entity_decode( $basethemevar_cpt_team_text ); ?></div>
 				<?php } ?>
 			</div>
 		</div>
 	</div>
 	<a class="sm-inner open-popup-link" href="#post-<?php the_ID(); ?>">
-		<?php if ( $image ) { ?>
-			<div class="member-image" style="background-image:url(<?php echo $image; ?>);">
+		<?php if ( $basethemevar_image ) { ?>
+			<div class="member-image" style="background-image:url(<?php echo esc_url( $basethemevar_image ); ?>);">
 			</div>
 		<?php } ?>
 		<div class="t-detail">
-			<?php if ( $title ) { ?>
-				<h4 class="member-name medium-text"> <?php echo $title; ?> </h4>
+			<?php if ( $basethemevar_title ) { ?>
+				<h4 class="member-name medium-text"> <?php echo html_entity_decode( $basethemevar_title ); ?> </h4>
 			<?php } ?>
 			<?php if ( $basethemevar_cpt_team_designation ) { ?>
-				<h5 class="designation"><?php echo $basethemevar_cpt_team_designation; ?></h5>
+				<h5 class="designation"><?php echo html_entity_decode( $basethemevar_cpt_team_designation ); ?></h5>
 			<?php } ?>
 		</div>
 	</a>

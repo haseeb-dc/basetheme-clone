@@ -11,13 +11,15 @@
 /**
  * Excerpt Function
  *
+ * @param number $count is a number of words needed in the excerpt
+ *
  * Function used to create custom excerpt.
  */
-function glide_excerpt( $count ) {
+function build_excerpt( $count ) {
 	global $post;
 	$permalink = get_permalink( $post->ID );
 	$excerpt   = get_the_excerpt();
-	$excerpt   = strip_tags( $excerpt );
+	$excerpt   = wp_strip_all_tags( $excerpt );
 	$excerpt   = substr( $excerpt, 0, $count );
 	$excerpt   = substr( $excerpt, 0, strripos( $excerpt, ' ' ) );
 	$excerpt   = $excerpt . ' ...';
@@ -30,12 +32,16 @@ function glide_excerpt( $count ) {
  * Excerpt with no read more option
  *
  * Function used to create custom excerpt.
+ *
+ * @param number $count is a number of words needed in the excerpt.
+ *
+ * @return string
  */
-function glide_excerpt_nomore( $count ) {
+function build_excerpt_nomore( $count ) {
 	global $post;
 	$permalink = get_permalink( $post->ID );
 	$excerpt   = get_the_excerpt();
-	$excerpt   = strip_tags( $excerpt );
+	$excerpt   = wp_strip_all_tags( $excerpt );
 	$excerpt   = substr( $excerpt, 0, $count );
 	$excerpt   = substr( $excerpt, 0, strripos( $excerpt, ' ' ) );
 	$excerpt   = $excerpt;
@@ -47,16 +53,18 @@ function glide_excerpt_nomore( $count ) {
  * Pagination Function
  *
  * The pagination function to display pagination on any archive page
+ *
+ * @param number $pages are total number of pages.
+ * @param number $range is a range of pagination.
+ *
+ * @return void
  */
-function glide_pagination( $pages = '', $range = 4 ) {
+function build_pagination( $pages = '', $range = 4 ) {
 	$showitems = ( $range * 2 ) + 1;
 
 	global $paged;
-	if ( empty( $paged ) ) {
-		$paged = 1;
-	}
 
-	if ( $pages == '' ) {
+	if ( '' === $pages ) {
 		global $wp_query;
 		$pages = $wp_query->max_num_pages;
 		if ( ! $pages ) {
@@ -64,26 +72,26 @@ function glide_pagination( $pages = '', $range = 4 ) {
 		}
 	}
 
-	if ( 1 != $pages ) {
-		echo '<div class="pagination"><span>Page ' . $paged . ' of ' . $pages . '</span>';
+	if ( 1 !== $pages ) {
+		echo '<div class="pagination"><span>Page ' . esc_html( $paged ) . ' of ' . esc_html( $pages ) . '</span>';
 		if ( $paged > 2 && $paged > $range + 1 && $showitems < $pages ) {
-			echo "<a href='" . get_pagenum_link( 1 ) . "'>&laquo; First</a>";
+			echo "<a href='" . esc_url( get_pagenum_link( 1 ) ) . "'>&laquo; First</a>";
 		}
 		if ( $paged > 1 && $showitems < $pages ) {
-			echo "<a href='" . get_pagenum_link( $paged - 1 ) . "'>&lsaquo; Previous</a>";
+			echo "<a href='" . esc_url( get_pagenum_link( $paged - 1 ) ) . "'>&lsaquo; Previous</a>";
 		}
 
 		for ( $i = 1; $i <= $pages; $i++ ) {
-			if ( 1 != $pages && ( ! ( $i >= $paged + $range + 1 || $i <= $paged - $range - 1 ) || $pages <= $showitems ) ) {
-				echo ( $paged == $i ) ? '<span class="current">' . $i . '</span>' : "<a href='" . get_pagenum_link( $i ) . "' class=\"inactive\">" . $i . '</a>';
+			if ( 1 !== $pages && ( ! ( $i >= $paged + $range + 1 || $i <= $paged - $range - 1 ) || $pages <= $showitems ) ) {
+				echo ( $paged === $i ) ? '<span class="current">' . $i . '</span>' : "<a href='" . esc_url( get_pagenum_link( $i ) ) . "' class=\"inactive\">" . $i . '</a>';
 			}
 		}
 
 		if ( $paged < $pages && $showitems < $pages ) {
-			echo '<a href="' . get_pagenum_link( $paged + 1 ) . '">Next &rsaquo;</a>';
+			echo '<a href="' . esc_url( get_pagenum_link( $paged + 1 ) ) . '">Next &rsaquo;</a>';
 		}
 		if ( $paged < $pages - 1 && $paged + $range - 1 < $pages && $showitems < $pages ) {
-			echo "<a href='" . get_pagenum_link( $pages ) . "'>Last &raquo;</a>";
+			echo "<a href='" . esc_url( get_pagenum_link( $pages ) ) . "'>Last &raquo;</a>";
 		}
 		echo "<div class='clear'></div></div>\n";
 	}
@@ -91,141 +99,147 @@ function glide_pagination( $pages = '', $range = 4 ) {
 
 
 /**
- * Allow SVG files upload in WordPress Media panel - Default restricted
+ * Helper function that builds button from ACF link object
+ *
+ * @param object $object is a acf button object.
+ * @param string $classes are the string of classes of acf button.
+ *
+ * @return string
  */
-function glide_svg_upload_support( $mimes ) {
-	$mimes['svg'] = 'image/svg+xml';
-	return $mimes;
-}
-
-add_filter( 'upload_mimes', 'glide_svg_upload_support' );
-
-
-/**
- * Remove default WordPress login logo link & set it to homepage of site
- */
-function glide_login_logo_url( $url ) {
-	return '"' . home_url() . '"';
-}
-
-add_filter( 'login_headerurl', 'glide_login_logo_url' );
-
-
-/**
- * Add viewport meta tag in head
- */
-function glide_viewport() {
-	echo '
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	';
-}
-
-add_action( 'wp_head', 'glide_viewport' );
-
-
-/**
- * Gravity forms filters
- */
-add_filter( 'gform_confirmation_anchor', '__return_true' );
-add_filter( 'gform_init_scripts_footer', '__return_true' );
-
-// Set Tabindex For Gravity Form
-add_filter( 'gform_tabindex', 'change_tabindex', 10, 2 );
-function change_tabindex( $tabindex, $form ) {
-	return 10;
-}
-
-/**
- * First and last menu item classes
- */
-function glide_first_last_menu_classes( $items ) {
-	if ( $items ) {
-		$items[1]->classes[]                 = 'first-menu-item';
-		$items[ count( $items ) ]->classes[] = 'last-menu-item';
-		return $items;
+function build_acf_button( $object, $classes = '' ) {
+	if ( $object['url'] ) {
+		$link = '';
+		$link = "<a href='" . esc_url( $object['url'] ) . "' title='" . esc_html( $object['title'] ) . "' target='" . $object['target'] . "' class='" . $classes . "'>" . esc_html( $object['title'] ) . '</a>';
+		return $link;
 	}
-	return $items;
-}
-add_filter( 'wp_nav_menu_objects', 'glide_first_last_menu_classes' );
-
-/**
- * Gravity Forms
- *
- * Disable the tab-index
- */
-
-add_filter( 'gform_tabindex', '__return_false' );
-
-
-
-/**
- * Set favicon of dashboard
- */
-
-function glide_theme_favicon() {
-	 $favicon_path = get_template_directory_uri() . '/assets/img/pwa/favicon.ico';
-
-	 echo '<link rel="shortcut icon" href="' . esc_url( $favicon_path ) . '" />';
+	return null;
 }
 
-add_action( 'admin_head', 'glide_theme_favicon' );
-
 /**
- * Function to remove the starting words from the_archive_title()
+ * Helper function to get escaped field from ACF
+ * and also normalize values.
  *
- * E.g. from Category : Dallas Neighborhoods => Dallas Neighborhoods
+ * @param string $field_key is the acf key name.
+ * @param string $escape_method is the method of escaping html.
+ *
+ * @return mixed
  */
-
-function glide_theme_archive_title( $title ) {
-	if ( is_category() ) {
-		$title = single_cat_title( '', false );
-	} elseif ( is_tag() ) {
-		$title = single_tag_title( '', false );
-	} elseif ( is_author() ) {
-		$title = get_the_author_meta( 'display_name' );
-	} elseif ( is_post_type_archive() ) {
-		$title = post_type_archive_title( '', false );
-	} elseif ( is_tax() ) {
-		$title = single_term_title( '', false );
+function get_fields_escaped( $field_key, $escape_method = 'esc_html' ) {
+	if ( function_exists( 'get_fields' ) ) {
+		$field = get_fields( $field_key );
+	}
+	/* Check for null and falsy values and always return space */
+	if ( false === $field || null === $field ) {
+		$field = '';
 	}
 
-	 return $title;
-}
-
-add_filter( 'get_the_archive_title', 'glide_theme_archive_title' );
-
-
-
-/**
- * Custom logo for WordPress login screen
- *
- * This function replaces the default WordPress logo on the login with website logo.
- */
-function glide_login_logo() {
-	 echo '
-		<style type="text/css">
-			.login h1 a {
-				background-image: url(' . get_stylesheet_directory_uri() . '/assets/img/logo.svg) !important;
-				background-position: center center;
-				color:rgba(0, 0, 0, 0);
-				background-size: contain;
-				height: 80px;
-				width: 80%;
-				outline: 0;
+	/* Handle arrays */
+	if ( is_array( $field ) || is_object( $field ) ) {
+		$field_escaped = array();
+		foreach ( $field as $key => $value ) {
+			if ( is_array( $value ) || is_object( $value ) ) {
+				$field_escaped[ $key ] = get_sub_field_escaped( $value, $escape_method );
+			} else {
+				$field_escaped[ $key ] = if_exist( ( null === $escape_method ) ? $value : $escape_method( $value ) );
+				// $field_escaped[$key] =   esc_html($value);
 			}
-		</style>
-	';
+		}
+		return $field_escaped;
+	} else {
+		return if_exist( ( null === $escape_method ) ? $field : $escape_method( $field ) );
+	}
 }
 
-add_action( 'login_head', 'glide_login_logo' );
+/**
+ * Helper function to get escaped field for a sub-field from ACF inside a parent
+ * and also normalize values.
+ *
+ * @param string $parent is the acf key name.
+ * @param string $escape_method is the method of escaping html.
+ *
+ * @return mixed
+ */
+function get_sub_field_escaped( $parent = null, $escape_method = 'esc_html' ) {
+	$field = $parent;
+	/* Check for null and falsy values and always return space */
+	if ( false === $field || null === $field ) {
+		$field = '';
+	}
 
-// removing parmalink from team cpt
-add_action( 'admin_head', 'wpds_custom_admin_post_css' );
-function wpds_custom_admin_post_css() {
+	/* Handle arrays */
+	if ( is_array( $field ) || is_object( $value ) ) {
+		$field_escaped = array();
+		foreach ( $field as $key => $value ) {
+			if ( is_array( $value ) || is_object( $value ) ) {
+				if ( is_object( $value ) ) {
+					$obj = new \stdClass();
 
-	 global $post_type;
+					foreach ( $value as $obj_k => $obj_v ) {
 
-	if ( $post_type == 'team' ) {
-		echo '<style>#edit-slug-box {display:none;}</style>';
+						$obj->$obj_k = if_exist( ( null === $escape_method ) ? $obj_v : $escape_method( $obj_v ) );
+					}
+					$field_escaped[ $key ] = $obj;
+				} else {
+					$field_escaped[ $key ] = get_sub_field_escaped( $value, $escape_method );
+				}
+			} else {
+
+				$field_escaped[ $key ] = if_exist( ( null === $escape_method ) ? $value : $escape_method( $value ) );
+			}
+		}
+		return $field_escaped;
+	} else {
+		return if_exist( ( null === $escape_method ) ? $field : $escape_method( $field ) );
+	}
+
+}
+
+/**
+ * Check if value exist
+ *
+ * @param mixed $value value to be checked.
+ *
+ * @return string
+ */
+function if_exist( $value ) {
+	return ( isset( $value ) && '' !== $value ) ? $value : null;
+}
+
+/**
+ * Return escaped string
+ *
+ * @param string $string string to decode.
+ *
+ * @return string
+ */
+function html_entity_remove( $string ) {
+	return sanitize_text_field( html_entity_decode( $string ) );
+}
+
+/**
+ * Fallback function for menus
+ *
+ * @return void
+ */
+function nav_fallback() {
+	if ( is_user_logged_in() ) {
+		?>
+		<ul>
+			<li> <?php esc_html__( 'Go to admin area to create navigation menu', 'basetheme_td' ); ?></li>
+		</ul>
+		<?php
+	}
+}
+
+/**
+ * A Function that check if post exist then print class;
+ *
+ * @param string $class post class.
+ *
+ * @return void
+ */
+function have_post_class( $class ) {
+	if ( have_posts() ) {
+		echo esc_html( $class );
 	}
 }

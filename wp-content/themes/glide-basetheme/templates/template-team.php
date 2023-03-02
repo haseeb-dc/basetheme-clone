@@ -9,17 +9,17 @@
  *
  * @package BaseTheme Package
  * @since 1.0.0
- *
  */
 
-// Include header
+// Include header.
 get_header();
 
-// Global variables
+// Global variables.
 global $option_fields;
-global $pID;
+global $post_id;
 global $fields;
 
+$basethemevar_pagetitle          = ( isset( $fields['basethemevar_pagetitle'] ) ) ? $fields['basethemevar_pagetitle'] : get_the_title();
 $basethemevar_trcho_feature_post = $fields['basethemevar_trcho_feature_post'];
 
 ?>
@@ -28,7 +28,7 @@ $basethemevar_trcho_feature_post = $fields['basethemevar_trcho_feature_post'];
 	<div class="blog-hero">
 		<div class="wrapper">
 			<div class="banner-content ">
-				<h1><?php echo the_title(); ?></h1>
+				<h1><?php echo html_entity_remove( $basethemevar_pagetitle ); ?></h1>
 			</div>
 		</div>
 	</div>
@@ -41,31 +41,34 @@ $basethemevar_trcho_feature_post = $fields['basethemevar_trcho_feature_post'];
 		<div class="section-team">
 			<div class="team-post-archive four-columns ">
 				<?php
-					// WP_Query arguments
+					// WP_Query .
 					global $paged;
 					$args = array(
-						'post_type'              => array( 'team' ),
-						'posts_per_page'         => -1, //how many posts you need
-						'paged' => ( get_query_var('paged') ? get_query_var('paged') : 1),
+						'post_type'      => array( 'team' ),
+						'posts_per_page' => -1, // how many posts you need.
+						'paged'          => ( get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1 ),
 					);
-					// The Query
+					// The Query.
 					$query = new WP_Query( $args );
-					// The Loop
+					// The Loop.
 					if ( $query->have_posts() ) {
 						while ( $query->have_posts() ) {
 							$query->the_post();
-						//Include specific template for the content.
-						get_template_part( 'partials/content', 'archive-team' );
+							// Include specific template for the content.
+							get_template_part( 'partials/content', 'archive-team' );
 						}
-					?> <div class="clear"></div> <?php
+						?>
+						<div class="clear"></div>
+						<?php
 					} else {
 						// If no content, include the "No posts found" template.
 						get_template_part( 'partials/content', 'none' );
-				}?>
+					}
+					?>
 			</div>
 			<div class="s-50"></div>
-			<?php if ( function_exists( 'glide_pagination' ) ) { ?>
-				<div class="center-align"> <?php glide_pagination( $query->max_num_pages ); ?></div>
+			<?php if ( function_exists( 'build_pagination' ) ) { ?>
+				<div class="center-align"> <?php build_pagination( $query->max_num_pages ); ?></div>
 			<?php } ?>
 			<div class="s-80"></div>
 			<!-- Content End -->
@@ -73,4 +76,5 @@ $basethemevar_trcho_feature_post = $fields['basethemevar_trcho_feature_post'];
 	</div>
 </section>
 
-<?php get_footer();
+<?php
+get_footer();

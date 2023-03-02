@@ -8,18 +8,23 @@
  * @since 1.0.0
  */
 
+/**
+ * Register custom cpt Testimonials
+ *
+ *  @return void
+ */
 function register_cpt_testimonials() {
-	// CPT Labels
-	$cpt_singular_capital   = 'Testimonial'; // Name of the post type shown in the menu
+	// CPT Labels.
+	$cpt_singular_capital   = 'Testimonial'; // Name of the post type shown in the menu.
 	$cpt_plural_capital     = 'Testimonials';
 	$cpt_singular_lowercase = 'testimonial';
 	$cpt_plural_lowercase   = 'testimonials';
 
-	// CPT Slug & Name
+	// CPT Slug & Name.
 	$cpt_register_key = 'testimonial';  // This is the registering name of the single CPT post. (Try to keep it singular).
 	$cpt_slug         = 'testimonial';  // This is the permalink slug of single CPT post. (Try to keep it singular).
-	// The slug will become - www.website.com/testimonial/single-testimonial-name
-
+	// The slug will become - www.website.com/testimonial/single-testimonial-name.
+	// @codingStandardsIgnoreStart
 	$labels = array(
 		'name'                  => _x( $cpt_plural_capital, 'Post type general name', 'basetheme_td' ),
 		'singular_name'         => _x( $cpt_singular_capital, 'Post type singular name', 'basetheme_td' ),
@@ -49,7 +54,8 @@ function register_cpt_testimonials() {
 		'items_list_navigation' => _x( $cpt_plural_capital . ' list navigation', 'Screen reader text for the pagination.', 'basetheme_td' ),
 		'items_list'            => _x( $cpt_plural_capital . ' list', 'Screen reader text for the items list.', 'basetheme_td' ),
 	);
-	$args   = array(
+	// @codingStandardsIgnoreEnd
+	$args = array(
 		'labels'             => $labels,
 		'public'             => true,
 		'publicly_queryable' => true,
@@ -71,18 +77,23 @@ function register_cpt_testimonials() {
 	);
 	register_post_type( $cpt_register_key, $args );
 }
+/**
+ * Register custom cpt Testimonials
+ *
+ *  @return void
+ */
 function register_cpt_resources() {
-	// CPT Labels
-	$cpt_singular_capital   = 'Resource'; // Name of the post type shown in the menu
+	// CPT Labels.
+	$cpt_singular_capital   = 'Resource'; // Name of the post type shown in the menu.
 	$cpt_plural_capital     = 'Resources';
 	$cpt_singular_lowercase = 'resource';
 	$cpt_plural_lowercase   = 'resources';
 
-	// CPT Slug & Name
+	// CPT Slug & Name.
 	$cpt_register_key = 'resource';  // This is the registering name of the single CPT post. (Try to keep it singular).
 	$cpt_slug         = 'resource';  // This is the permalink slug of single CPT post. (Try to keep it singular).
-	// The slug will become - www.website.com/testimonial/single-testimonial-name
-
+	// The slug will become - www.website.com/testimonial/single-testimonial-name.
+	// @codingStandardsIgnoreStart
 	$labels = array(
 		'name'                  => _x( $cpt_plural_capital, 'Post type general name', 'basetheme_td' ),
 		'singular_name'         => _x( $cpt_singular_capital, 'Post type singular name', 'basetheme_td' ),
@@ -112,7 +123,8 @@ function register_cpt_resources() {
 		'items_list_navigation' => _x( $cpt_plural_capital . ' list navigation', 'Screen reader text for the pagination.', 'basetheme_td' ),
 		'items_list'            => _x( $cpt_plural_capital . ' list', 'Screen reader text for the items list.', 'basetheme_td' ),
 	);
-	$args   = array(
+	// @codingStandardsIgnoreEnd
+	$args = array(
 		'labels'             => $labels,
 		'public'             => true,
 		'publicly_queryable' => true,
@@ -135,18 +147,23 @@ function register_cpt_resources() {
 	);
 	register_post_type( $cpt_register_key, $args );
 }
+/**
+ * Register custom cpt Testimonials
+ *
+ *  @return void
+ */
 function register_cpt_team() {
-	// CPT Labels
-	$cpt_singular_capital   = 'Team Member'; // Name of the post type shown in the menu
+	// CPT Labels.
+	$cpt_singular_capital   = 'Team Member'; // Name of the post type shown in the menu.
 	$cpt_plural_capital     = 'Team Members';
 	$cpt_singular_lowercase = 'team member';
 	$cpt_plural_lowercase   = 'team members';
 
-	// CPT Slug & Name
+	// CPT Slug & Name.
 	$cpt_register_key = 'team';  // This is the registering name of the single CPT post. (Try to keep it singular).
 	$cpt_slug         = 'team';  // This is the permalink slug of single CPT post. (Try to keep it singular).
-	// The slug will become - www.website.com/testimonial/single-testimonial-name
-
+	// The slug will become - www.website.com/testimonial/single-testimonial-name.
+	// @codingStandardsIgnoreStart
 	$labels = array(
 		'name'                  => _x( $cpt_plural_capital, 'Post type general name', 'basetheme_td' ),
 		'singular_name'         => _x( $cpt_singular_capital, 'Post type singular name', 'basetheme_td' ),
@@ -176,7 +193,8 @@ function register_cpt_team() {
 		'items_list_navigation' => _x( $cpt_plural_capital . ' list navigation', 'Screen reader text for the pagination.', 'basetheme_td' ),
 		'items_list'            => _x( $cpt_plural_capital . ' list', 'Screen reader text for the items list.', 'basetheme_td' ),
 	);
-	$args   = array(
+	// @codingStandardsIgnoreEnd
+	$args = array(
 		'labels'              => $labels,
 		'public'              => true,
 		'exclude_from_search' => true,
@@ -208,13 +226,13 @@ add_action( 'init', 'register_cpt_testimonials' );
 /**
  * Register custom tags for Experiments cpt
  */
-function testimonials_taxonomy() {
+function register_testimonials_taxonomy() {
 
-	// CPT Slug & Name
+	// CPT Slug & Name.
 	$tax_parent       = 'testimonial'; // This is registering name of respective CPT.
 	$tax_register_key = 'testimonials';  // This is the registering name of the taxonomy (Try to keep it plural).
 	$tax_slug         = 'testimonials'; // This is the permalink slug of taxonomy archive (Try to keep it plural).
-	// The slug will become - www.website.com/testimonials/single-testimonial-category
+	// The slug will become - www.website.com/testimonials/single-testimonial-category.
 
 	$labels = array(
 		'name'                       => _x( 'Category', 'Taxonomy General Name', 'basetheme_td' ),
@@ -256,4 +274,4 @@ function testimonials_taxonomy() {
 
 }
 
-add_action( 'init', 'testimonials_taxonomy', 0 );
+add_action( 'init', 'register_testimonials_taxonomy', 0 );

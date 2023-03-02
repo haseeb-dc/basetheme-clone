@@ -13,20 +13,19 @@ get_header();
 
 // Global variables.
 global $option_fields;
-global $pID;
+global $post_id;
 global $fields;
 
-// Required if you want different search results style for separate CPT etc
-// $post_type = get_post_type();
+// Required if you want different search results style for separate CPT etc.
 
- /**
+/**
  * Search Masthead
  */
 ?> <section id="hero-section" class="hero-section">
 	<!-- Hero Start -->
-	<div class="hero-ctn search-hero">
+	<div class="hero-single search-hero">
 		<div class="wrapper">
-			<h1><?php _e( 'Search Results', 'basetheme_td' ); ?></h1>
+			<h1><?php esc_html__( 'Search Results', 'basetheme_td' ); ?></h1>
 			<p>
 			<?php
 					printf(
@@ -35,7 +34,7 @@ global $fields;
 						'<span class="search-term">' . esc_html( get_search_query() ) . '</span>'
 					);
 					?>
-				 </p>
+			</p>
 		</div>
 	</div>
 	<!-- Hero End -->
@@ -43,12 +42,12 @@ global $fields;
 <section id="page-section" class="page-section">
 	<!-- Content Start -->
 	<div class="wrapper">
-			<div class="post-archive three-columns">
+			<div class="post-archive <?php have_post_class( 'three-columns' ); ?>">
 				<?php
 				if ( have_posts() ) {
 					while ( have_posts() ) {
 						the_post();
-						// Include specific template for the content
+						// Include specific template for the content.
 						get_template_part( 'partials/content-archive', get_post_type() );
 					}
 					?>
@@ -61,8 +60,8 @@ global $fields;
 			</div>
 			<div class="ts-40"></div>
 			<?php
-			if ( function_exists( 'glide_pagination' ) ) {
-				glide_pagination( $wp_query->max_num_pages );
+			if ( function_exists( 'build_pagination' ) ) {
+				build_pagination( $wp_query->max_num_pages );
 			}
 			?>
 			<div class="ts-80"></div>
