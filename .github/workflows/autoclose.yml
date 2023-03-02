@@ -13,7 +13,7 @@ jobs:
           if [[ ${{ github.event.pull_request.base.ref }} != "development" || ${{ github.event.pull_request.head.ref }} != "development" ]]; then
             echo "This pull request is not from or merging into the development branch."
             echo "Closing pull request..."
-            curl -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" -H "Content-Type: application/json" -d '{"state":"closed"}' "${{ github.api_url }}/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}"
+            curl -X POST -H "Authorization: Bearer ${{ secrets.PAT }}" -H "Content-Type: application/json" -d '{"state":"closed"}' "${{ github.api_url }}/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}"
           else
             echo "This pull request is from or merging into the development branch."
           fi
