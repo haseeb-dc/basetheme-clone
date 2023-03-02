@@ -1,3 +1,9 @@
+name: Close PR if not from development branch
+
+on:
+  pull_request:
+    types: opened 
+
 jobs:
   check-pr:
     runs-on: ubuntu-latest
