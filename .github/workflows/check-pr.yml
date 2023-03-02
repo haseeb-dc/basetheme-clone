@@ -2,7 +2,7 @@ name: Close PR if not from development branch
 
 on:
   pull_request:
-    types: [opened, edited, synchronize] 
+    types: [opened, edited] 
      branches:
       - development
       - master
