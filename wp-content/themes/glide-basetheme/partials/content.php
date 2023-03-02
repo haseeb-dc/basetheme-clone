@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Template part for displaying the_content() function
  *
@@ -7,7 +6,7 @@
  *
  * @package BaseTheme Package
  * @since 1.0.0
-*/
+ */
 
 the_content(
 	sprintf(

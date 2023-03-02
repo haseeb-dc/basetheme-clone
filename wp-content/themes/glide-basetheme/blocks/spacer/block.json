@@ -1,0 +1,16 @@
+{
+  "name": "acf/spacer",
+  "title": "Spacer",
+  "description": "A custom spacer block.",
+  "category": "theme-blocks",
+  "icon": "spacer-arrow",
+  "keywords": ["spacer", "theme"],
+  "supports": {
+    "align": true
+  },
+  "acf": {
+    "mode": "edit",
+    "renderTemplate": "block-spacer.php"
+  },
+  "align": "full"
+}

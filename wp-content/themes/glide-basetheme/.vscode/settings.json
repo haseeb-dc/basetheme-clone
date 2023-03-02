@@ -1,0 +1,42 @@
+{
+	"phpcbf.enable": true,
+	"phpcbf.executablePath": "./vendor/bin/phpcbf",
+	"phpcs.executablePath": "./vendor/bin/phpcs",
+	"phpcbf.documentFormattingProvider": true,
+	"phpcbf.onsave": false,
+	"phpcs.standard": "WordPress",
+	"phpcbf.standard": "WordPress",
+	//for css and js
+	"stylelint.enable": true,
+	"css.validate": false,
+	"scss.validate": false,
+	"editor.formatOnPaste": true,
+	"prettier.eslintIntegration": true,
+	"prettier.stylelintIntegration": true,
+	"editor.formatOnSave": true,
+	"eslint.autoFixOnSave": true,
+	"[css]": {
+		"editor.formatOnSave": true
+	},
+	"[php]": {
+		"editor.detectIndentation": true,
+		"editor.useTabStops": true,
+		"editor.formatOnSave": false,
+		"editor.insertSpaces": false
+	},
+	"[javascript]": {
+		"editor.insertSpaces": true,
+		"editor.detectIndentation": true,
+		"editor.useTabStops": false
+	},
+	"[json]": {
+		"editor.formatOnSave": false
+	},
+	"[xml]": {
+		"editor.formatOnSave": false
+	},
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": true
+	},
+	"cSpell.words": ["ABSPATH"]
+}

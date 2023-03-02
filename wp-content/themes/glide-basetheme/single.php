@@ -6,15 +6,14 @@
  *
  * @package BaseTheme Package
  * @since 1.0.0
- *
  */
 
-// Include header
+// Include header.
 get_header();
 
-// Global variables
+// Global variables.
 global $option_fields;
-global $pID;
+global $post_id;
 global $fields;
 ?>
 
@@ -22,7 +21,7 @@ global $fields;
 	<!-- Hero Start -->
 
 	<div class="container-980">
-		<div class="hero-ctn">
+		<div class="hero-single">
 			<div class="wrapper">
 				<div class="post-title">
 					<h1><?php the_title(); ?></h1>
@@ -37,16 +36,39 @@ global $fields;
 
 <section id="page-section" class="page-section">
 	<!-- Content Start -->
-
-	<?php while ( have_posts() ) { the_post();
-		//Include specific template for the content.
-		get_template_part( 'partials/content', get_post_type() );
-	} ?>
-
-	<div class="clear"></div>
-	<div class="ts-80"></div>
-
+	<div class="wrapper">
+		<div class="<?php have_post_class( 'three-columns' ); ?>">
+			<?php
+			global $wp_query;
+			if ( have_posts() ) {
+				while ( have_posts() ) {
+					the_post();
+					// Include specific template for the content.
+					get_template_part( 'partials/content-archive', get_post_type() );
+				}
+				?>
+				<div class="clear"></div>
+				<?php
+			} else {
+				// If no content, include the "No posts found" template.
+				get_template_part( 'partials/content', 'none' );
+			}
+			?>
+		</div>
+		<div class="ts-40"></div>
+		<?php
+		if ( have_posts() ) {
+			if ( function_exists( 'build_pagination' ) ) {
+				?>
+			<div class="center-align">
+				<?php build_pagination( $wp_query->max_num_pages ); ?>
+			</div>
+				<?php
+			}
+		}
+		?>
+		<div class="ts-80"></div>
+	</div>
 	<!-- Content End -->
 </section>
-
-<?php get_footer();
+<?php get_footer(); ?>

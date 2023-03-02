@@ -12,7 +12,7 @@
 
 <section class="no-results not-found">
 	<div class="page-header">
-		<h2 class="page-title"><?php _e( 'Nothing Found', 'basetheme_td' ); ?></h2>
+		<h2 class="page-title"><?php esc_html__( 'Nothing Found', 'basetheme_td' ); ?></h2>
 	</div><!-- .page-header -->
 	<div class="page-content">
 		<?php
@@ -30,11 +30,11 @@
 					esc_url( admin_url( 'post-new.php' ) )
 				);
 			?>
-		<?php }elseif ( is_search() ) { ?>
-			<p><?php _e( 'Sorry, but nothing matched your search terms. Please try again with some different keywords.', 'basetheme_td' ); ?></p>
+		<?php } elseif ( is_search() ) { ?>
+			<p><?php esc_html__( 'Sorry, but nothing matched your search terms. Please try again with some different keywords.', 'basetheme_td' ); ?></p>
 			<?php get_search_form(); ?>
-		<?php }else { ?>
-			<p><?php _e( 'It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help.', 'basetheme_td' ); ?></p>
+		<?php } else { ?>
+			<p><?php esc_html__( 'It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help.', 'basetheme_td' ); ?></p>
 			<?php get_search_form(); ?>
 		<?php } ?>
 	</div><!-- .page-section -->

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Image Converter</title>
+</head>
+
+<body>
+	<form>
+		<input type="file" id="file-input" accept=".png,.jpg" multiple>
+		<br>
+		<label>Max Width:</label>
+		<input type="number" id="width-input" value="800">
+		<br>
+		<label>Max Height:</label>
+		<input type="number" id="height-input" value="600">
+		<br>
+		<button type="submit">Convert to WebP</button>
+	</form>
+
+	<script>
+		// JavaScript code to convert images to webp, resize them, and maintain aspect ratio goes here
+		document.querySelector('form').addEventListener('submit', async function (e) {
+			e.preventDefault();
+
+			const fileInput = document.querySelector('#file-input');
+			const files = fileInput.files;
+
+			const widthInput = document.querySelector('#width-input');
+			const heightInput = document.querySelector('#height-input');
+			const maxWidth = parseInt(widthInput.value);
+			const maxHeight = parseInt(heightInput.value);
+
+			for (let i = 0; i < files.length; i++) {
+				const file = files[i];
+				const reader = new FileReader();
+				reader.readAsDataURL(file);
+				reader.onload = async function () {
+					const dataUrl = reader.result;
+					const img = new Image();
+					img.src = dataUrl;
+					img.onload = async function () {
+						const canvas = document.createElement('canvas');
+						let width = img.width;
+						let height = img.height;
+						if (width > maxWidth) {
+							height *= maxWidth / width;
+							width = maxWidth;
+						}
+						if (height > maxHeight) {
+							width *= maxHeight / height;
+							height = maxHeight;
+						}
+						canvas.width = width;
+						canvas.height = height;
+						const ctx = canvas.getContext('2d');
+						ctx.drawImage(img, 0, 0, width, height);
+						canvas.toBlob(function (blob) {
+							const url = URL.createObjectURL(blob);
+							const link = document.createElement('a');
+							link.href = url;
+							link.download = `${file.name}.webp`;
+							document.body.appendChild(link);
+							link.click();
+							document.body.removeChild(link);
+						}, 'image/webp', 0.8);
+					}
+				}
+			}
+		});
+	</script>
+</body>
+
+</html>
