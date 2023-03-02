@@ -10,12 +10,13 @@
 
 
 
-
-
 // Global variables
 global $option_fields;
 global $pID;
 global $fields;
+
+
+
 
 $pID = get_the_ID();
 
