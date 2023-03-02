@@ -13,10 +13,14 @@
 		{
 			"type": "vcs",
 			"url": "https://github.com/devcause/WordPress-Coding-Standards"
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/devcause/PHP_CodeSniffer"
 		}
 	],
 	"require-dev": {
-		"squizlabs/php_codesniffer": "*",
+		"squizlabs/php_codesniffer": "dev-fix",
 		"dealerdirect/phpcodesniffer-composer-installer": "^1.0",
 		"wp-coding-standards/wpcs": "dev-wpcsfix"
 	},
