@@ -8,17 +8,16 @@ on:
 jobs:
   phpcs:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Install PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.2.3'
-          extensions: intl, mbstring, zip
-      - name: Install PHPCS
-        run: composer global require "squizlabs/php_codesniffer=*"
-      - name: Configure PHPCS
-        run: phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs
-      - name: Check coding standards
-        run: phpcs --standard=WordPress --ignore=*/vendor/* .
+      - uses: actions/checkout@v2
+
+      - name: Install Composer dependencies
+        run: |
+          php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+          php composer-setup.php
+          php -r "unlink('composer-setup.php');"
+          php composer.phar install --no-progress --no-suggest
+
+      - name: Check PHP code with PHPCS
+        run: ./vendor/bin/phpcs --standard=WordPress ./src
