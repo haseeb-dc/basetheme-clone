@@ -4,10 +4,6 @@ on:
   pull_request:
     types: [opened, edited] 
 
-branches:
-- development
-- master
-
 jobs:
   check-pr:
     runs-on: ubuntu-latest
