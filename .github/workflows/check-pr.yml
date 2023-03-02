@@ -3,9 +3,10 @@ name: Close PR if not from development branch
 on:
   pull_request:
     types: [opened, edited] 
-     branches:
-      - development
-      - master
+
+branches:
+- development
+- master
 
 jobs:
   check-pr:
