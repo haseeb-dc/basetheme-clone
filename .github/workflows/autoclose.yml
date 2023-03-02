@@ -2,18 +2,21 @@ name: Close PR if not from development branch
 
 on:
   pull_request:
-    types: [opened, synchronize]
+    types: opened 
 
 jobs:
-  close-pr:
+  check-pr:
     runs-on: ubuntu-latest
     steps:
-      - name: Check branch
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Check branch names
         run: |
-          if [[ ${{ github.event.pull_request.base.ref }} != "development" || ${{ github.event.pull_request.head.ref }} != "development" ]]; then
-            echo "This pull request is not from or merging into the development branch."
-            echo "Closing pull request..."
-            curl -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" -H "Content-Type: application/json" -d '{"state":"closed"}' "${{ github.api_url }}/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}"
-          else
-            echo "This pull request is from or merging into the development branch."
+          if [ ${{ github.head_ref }} != "development" ]; then
+            echo "::error::Pull request must be from the development branch"
+            exit 1
+          fi
+          if [ ${{ github.base_ref }} != "development" ]; then
+            echo "::error::Pull request must be merged into the development branch"
+            exit 1
           fi
