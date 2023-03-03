@@ -1,3 +1,3 @@
 # glide-basetheme
 
-update 6
+update 7
