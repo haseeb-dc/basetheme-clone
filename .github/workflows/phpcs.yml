@@ -17,6 +17,7 @@ jobs:
           php-version: '8.2.3'
       - name: Install Composer dependencies
         run: |
+          cd ./wp-content/themes/glide-basetheme/
           composer install
 
       - name: Check PHP code with PHPCS
