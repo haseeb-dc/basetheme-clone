@@ -17,10 +17,7 @@ jobs:
           php-version: '8.2.3'
       - name: Install Composer dependencies
         run: |
-          php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-          php composer-setup.php
-          php -r "unlink('composer-setup.php');"
-          php composer.phar install --no-progress --no-suggest  --working-dir=wp-content/themes/glide-basetheme
+          composer install
 
       - name: Check PHP code with PHPCS
         run: ./wp-content/themes/glide-basetheme/vendor/bin/phpcs --standard=WordPress ./wp-content/themes/glide-basetheme
