@@ -8,6 +8,7 @@ on:
 jobs:
   phpcs:
     runs-on: ubuntu-latest
+    php: '8.2.3'
 
     steps:
       - uses: actions/checkout@v2
