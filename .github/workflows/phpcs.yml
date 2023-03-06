@@ -7,11 +7,14 @@ on:
 
 jobs:
   phpcs:
-    runs-on: ubuntu-latest/php8.2.3
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
-
+      - name: Setup PHP with specific version of PECL extension
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2.3'
       - name: Install Composer dependencies
         run: |
           php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
